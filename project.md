@@ -22,23 +22,23 @@ A plataforma também deverá fornecer informações como a profundidade do merca
 |--------------------------------|----------------------------------|
 | Ativo (Asset)                  | Um item negociável, como BTC, ETH, ações, etc. |
 | Compra (Buy ou Bid)            | Intenção de comprar um ativo a um determinado preço. |
-| Depth (ou Market Depth)        | Representa a profundidade do livro de ofertas: quantidade agregada de ordens de compra e venda por faixa de preço. Demonstra a liquidez e resistência a movimentos de preço. |
+| Depth        | Representa a profundidade do livro de ofertas: quantidade agregada de ordens de compra e venda por faixa de preço. Demonstra a liquidez e resistência a movimentos de preço. |
 | Livro de Ofertas (Order Book)  | Lista de ordens de compra e venda abertas, organizadas por preço. |
 | Market                         | Representa um par de negociação, com suas ordens, execuções (BTC/USD). |
-| Match (ou Execução)            | Ocorre quando duas ordens opostas (compra/venda) são compatíveis em preço e volume. |
+| Execução ou Correspondência (Match)            | Ocorre quando duas ordens opostas (compra/venda) são compatíveis em preço e volume. |
 | Negociação (Trade)            | Representa o resultado de uma execução entre uma ordem de compra e uma de venda. |
 | Ordem (Order)                  | Instrução para comprar ou vender um ativo. Pode ser de diferentes tipos. |
 | Ordem de Mercado (Market Order)| Ordem executada imediatamente ao melhor preço disponível. |
-| Ordem Limitada (Limit Order)   | Ordem que só será executada se atingir o preço especificado. |
+| Ordem Limitada (Limit Order)   | Ordem que só será executada se atingir o preço especificado (Vamos utilizar esse tipo de ordem no projeto). |
 | Preço de Abertura (Open Price) | Preço da primeira negociação de um período. |
-| Preço de Compra (Bid Price)    | O maior preço que alguém está disposto a pagar. |
+| Preço de Compra (Buy/Bid Price)    | O maior preço que alguém está disposto a pagar. |
 | Preço de Fechamento (Close Price) | Preço da última negociação de um período. |
-| Preço de Venda (Ask Price)     | O menor preço que alguém está disposto a vender. |
+| Preço de Venda (Sell/Ask Price)     | O menor preço que alguém está disposto a vender. |
 | Preço Máximo (Max Price)       | O maior preço registrado em um determinado período. |
 | Preço Mínimo (Min Price)       | O menor preço registrado em um determinado período. |
-| Side                           | Direção da ordem: BUY (compra) ou SELL (venda). Define se o usuário quer adquirir ou se desfazer de um ativo. |
-| Spread                         | Diferença entre o preço de venda e o preço de compra (Ask - Bid). Reflete a liquidez do mercado. |
-| Ticker                         | É um snapshot estatístico do Market (último preço, volume, etc). |
+| Side                           | Direção da ordem: buy (compra) ou sell (venda). Define se o usuário quer adquirir ou se desfazer de um ativo. |
+| Spread                         | Diferença entre o preço de venda e o preço de compra existentes no livro de ofertas. Reflete a liquidez do mercado. |
+| Ticker                         | É um snapshot estatístico do Market (último preço, open, close, min, max, volume, spread). |
 | Último Preço (Last Price)      | Preço da negociação mais recente. |
 | Venda (Sell ou Ask)            | Intenção de vender um ativo a um determinado preço. |
 | Volume                         | Quantidade de ativo negociado em um determinado período ou em uma ordem específica. |
@@ -46,6 +46,8 @@ A plataforma também deverá fornecer informações como a profundidade do merca
 ### Use Cases
 
 #### Signup (Criar Conta)
+
+<p>Criar uma conta para o usuário realizar negociações na plataforma.</p>
 
 **Input**: name, email, document, password<br/>
 **Output**: accountId
@@ -59,6 +61,8 @@ Regras:
 
 #### Deposit (Depósito)
 
+<p>Adicionar fundos em uma conta.</p>
+
 **Input**: accountId, assetId, quantity<br/>
 **Output**: void
 
@@ -69,6 +73,8 @@ Regras:
 * A quantidade deve ser maior que zero
 
 #### Withdraw (Saque)
+
+<p>Retirar fundos de uma conta.</p>
 
 **Input**: accountId, assetId, quantity<br/>
 **Output**: void
@@ -81,22 +87,24 @@ Regras:
 
 #### GetAccount (Obter Conta)
 
+<p>Retornar informações de uma conta.</p>
+
 **Input**: accountId<br/>
 **Output**: accountId, name, email, document, assets[] (assetId, quantity)
 
 #### PlaceOrder (Criar Ordem)
+
+<p>Criar uma ordem de compra ou venda limitada em um preço específico.</p>
 
 **Input**: marketId, accountId, side, quantity, price<br/>
 **Output**: orderId
 
 Regras:
 
-* Verificar se o mercado existe (vamos utilizar sempre BTC/USD nos exemplos)
 * Verificar se a conta existe
 * Verificar se a conta tem saldo suficiente para comprar ou vender a quantidade de ativo da ordem
 * Bloquear a quantidade do ativo na conta até que a ordem seja executada ou cancelada
 * Salvar a ordem no mecanismo de persistência
-* Executar a ordem
 
 #### ExecuteOrder (Executar Ordem)
 
