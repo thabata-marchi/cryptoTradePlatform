@@ -267,3 +267,18 @@ create table ccca.trade (
 ***
 
 A plataforma terá um streaming de ordens, negociações e profundidade do mercado conforme novas ordens são criadas e executadas. Os retornos devem ser os mesmos dos use cases já definidos na especificação.
+
+### Decisões de Arquitetura
+
+***
+
+Decisão 1: Manter o order book em memória
+
+Justificativa:
+* Latência: Matching de ordens precisa ser ultra rápido. Acesso a disco ou banco (mesmo com índices bons) é lento comparado a memória.
+* Volume de atualizações: Um order book é constantemente atualizado. Cada nova ordem pode mudar o topo do livro e desencadear múltiplas negociações.
+* Atomicidade no matching: Fazer matching em memória permite garantir atomicidade de forma mais simples e segura, sem depender de transações de banco.
+* Design inspirado nas exchanges reais: Praticamente toda exchange de alta performance usa memória + threads/event loops para manter e casar ordens.
+
+Observação:
+* Caso o processo seja reiniciado, é possível recuperar o estado do order book a partir do banco de dados
