@@ -268,6 +268,8 @@ create table ccca.trade (
 
 A plataforma terá um streaming de ordens, negociações e profundidade do mercado conforme novas ordens são criadas e executadas. Os retornos devem ser os mesmos dos use cases já definidos na especificação.
 
+***
+
 ### Decisões de Arquitetura
 
 #### ADR 001: Armazenar Order Book em Memória
