@@ -16,21 +16,32 @@ Caso não haja correspondência imediata, a ordem permanece no livro aguardando 
 
 A plataforma também deverá fornecer informações como a profundidade do mercado, que exibe as ordens de compra e venda ativas, além do histórico de ordens e negociações realizadas por cada conta.
 
-### Termos de Negócio
+### Linguagem Ubíqua
 
-* ordem: order
-* lado da ordem: side
-* compra: buy ou bid
-* venda: sell ou ask
-* livro de ofertas: order book
-* negociação: trade
-* profundidade do mercado: depth
-* mercado: market
-* correspondência entre ordens: match
-* conta: account
-* realizar ordem: place order
-* criar conta: signup
-
+| Termo                           | Definição (linguagem do domínio) |
+|--------------------------------|----------------------------------|
+| Ativo (Asset)                  | Um item negociável, como BTC, ETH, ações, etc. |
+| Compra (Buy ou Bid)            | Intenção de comprar um ativo a um determinado preço. |
+| Depth (ou Market Depth)        | Representa a profundidade do livro de ofertas: quantidade agregada de ordens de compra e venda por faixa de preço. Demonstra a liquidez e resistência a movimentos de preço. |
+| Livro de Ofertas (Order Book)  | Lista de ordens de compra e venda abertas, organizadas por preço. |
+| Market                         | Representa um par de negociação, com suas ordens, execuções (BTC/USD). |
+| Match (ou Execução)            | Ocorre quando duas ordens opostas (compra/venda) são compatíveis em preço e volume. |
+| Negociação (Trade)            | Representa o resultado de uma execução entre uma ordem de compra e uma de venda. |
+| Ordem (Order)                  | Instrução para comprar ou vender um ativo. Pode ser de diferentes tipos. |
+| Ordem de Mercado (Market Order)| Ordem executada imediatamente ao melhor preço disponível. |
+| Ordem Limitada (Limit Order)   | Ordem que só será executada se atingir o preço especificado. |
+| Preço de Abertura (Open Price) | Preço da primeira negociação de um período. |
+| Preço de Compra (Bid Price)    | O maior preço que alguém está disposto a pagar. |
+| Preço de Fechamento (Close Price) | Preço da última negociação de um período. |
+| Preço de Venda (Ask Price)     | O menor preço que alguém está disposto a vender. |
+| Preço Máximo (Max Price)       | O maior preço registrado em um determinado período. |
+| Preço Mínimo (Min Price)       | O menor preço registrado em um determinado período. |
+| Side                           | Direção da ordem: BUY (compra) ou SELL (venda). Define se o usuário quer adquirir ou se desfazer de um ativo. |
+| Spread                         | Diferença entre o preço de venda e o preço de compra (Ask - Bid). Reflete a liquidez do mercado. |
+| Ticker                         | É um snapshot estatístico do Market (último preço, volume, etc). |
+| Último Preço (Last Price)      | Preço da negociação mais recente. |
+| Venda (Sell ou Ask)            | Intenção de vender um ativo a um determinado preço. |
+| Volume                         | Quantidade de ativo negociado em um determinado período ou em uma ordem específica. |
 
 ### Use Cases
 
