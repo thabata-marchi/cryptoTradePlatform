@@ -115,13 +115,13 @@ Regras:
 Regras:
 
 * Verificar se a conta existe
-* Verificar se a conta tem saldo suficiente para comprar ou vender a quantidade de ativo da ordem
+* Verificar se a conta tem saldo suficiente para comprar ou vender a quantidade de ativos no preço definido na ordem
 * Salvar a ordem no mecanismo de persistência
 
 Observações:
-* O marketId é composto de um par de ativos (exemplo: BTC/USD). O lado esquerdo é o ativo que está sendo comprado ou vendido e o lado direito é como ele está sendo pago. Ou seja, se a ordem for de venda, a conta deve ter saldo no ativo que está sendo negociado, nesse caso BTC. Se a ordem for de compra, a conta deve ter saldo no ativo que está sendo utilizado para o pagamento, nesse caso USD
-* A verificação do saldo deve levar em consideração as ordens em aberto, ou seja, se uma conta tem 10 BTC mas ao mesmo tempo tem 5 ordens em aberto, cada uma vendendo 1 BTC, o saldo disponível é de apenas 5
-* Sempre que uma nova ordem é criada, o sistema deve tentar executá-la imediatamente com ordens existentes no livro
+* O marketId é composto de um par de ativos (exemplo: BTC/USD). O lado esquerdo é o ativo principal, que está sendo comprado ou vendido, e o lado direito é o ativo utilizado para pagamento. Ou seja, se a ordem for de venda, a conta deve ter saldo no ativo principal, que está sendo negociado, nesse caso BTC. Se a ordem for de compra, a conta deve ter saldo no ativo que está sendo utilizado para o pagamento, nesse caso USD
+* A verificação do saldo deve levar em consideração as ordens que estão em aberto, evitando que alguém compra ou venda um ativo duas vezes
+* Sempre que uma nova ordem é criada, a plataforma deve tentar executá-la (***essa parte ainda não será implementada***)
 
 ***
 
