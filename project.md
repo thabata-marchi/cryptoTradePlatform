@@ -123,6 +123,8 @@ Observações:
 * A verificação do saldo deve levar em consideração as ordens em aberto, ou seja, se uma conta tem 10 BTC mas ao mesmo tempo tem 5 ordens em aberto, cada uma vendendo 1 BTC, o saldo disponível é de apenas 5
 * Sempre que uma nova ordem é criada, o sistema deve tentar executá-la imediatamente com ordens existentes no livro
 
+***
+
 #### ExecuteOrder (Executar Ordem)
 
 <p>Quando uma nova ordem é inserida no livro de ofertas, o mecanismo de matching realiza uma tentativa de execução. Esse processo avalia se a ordem pode ser casada imediatamente com ordens do lado oposto.</p>
@@ -136,6 +138,8 @@ Regras:
 * Salvar a ordem atualizada no banco de dados
 * Se a ordem for executada uma negociação deve ser criada e persistida
 
+***
+
 #### GetDepth (Obter Profundidade)
 
 <p>Retorna a profundidade do mercado para um par de ativos (market), representando as ordens de compra e venda abertas, organizadas por faixa de preço. Essa informação é essencial para exibir o livro de ofertas agregado (depth chart) e analisar a liquidez disponível em cada lado.</p>
@@ -148,6 +152,8 @@ Regras:
 * Agrupe as ordens por preço, somando as quantidade (exemplo: se existem duas ordens vendendo 10 unidades de BTC por 84500, retorne 20 unidade de BTC por 84500)
 * Permita receber a precisão, ou seja, um fator de divisão para agrupar desconsiderando uma determinada quantidade de casas decimais (exemplo: existem 3 ordens comprando 4 unidades de BTC por 84500, 85600 e 84700, se forem consideradas 3 casas decimais, a exibição deve ser 12 unidades por 84000, agrupando tudo que estiver entre 84000 e 84999)
 
+***
+
 #### GetOrders (Obter Ordens)
 
 <p>Retorna as ordens de uma conta específica, podendo ter um filtro de status.</p>
@@ -155,12 +161,16 @@ Regras:
 **Input**: accountId, status<br/>
 **Output**: orderId, side, quantity, price, fillQuantity, fillPrice, timestamp, status
 
+***
+
 #### GetTrades (Obter Negociações)
 
 <p>Retorna as negociações.</p>
 
 **Input**: marketId<br/>
 **Output**: tradeId, buyOrderId, sellOrderId, side, quantity, price, timestamp
+
+***
 
 #### GetMarketTicket (Obter Informações do Mercado)
 
@@ -176,7 +186,11 @@ Regras:
 * O max é o maior preço negociado
 * O volume é o total da multiplicação da quantidade e do preço negociado
 
+***
+
 ### API
+
+***
 
 Segue abaixo os endpoints da API:
 
@@ -192,7 +206,11 @@ Segue abaixo os endpoints da API:
 * GET /markets/:marketId/trades
 * GET /markets/:marketId/depth
 
+***
+
 ### Modelo de Dados
+
+***
 
 Segue abaixo o modelo de dados relacional do projeto:
 
@@ -243,6 +261,10 @@ create table ccca.trade (
 );
 </pre>
 
+***
+
 ### WebSocket
+
+***
 
 A plataforma terá um streaming de ordens, negociações e profundidade do mercado conforme novas ordens são criadas e executadas. Os retornos devem ser os mesmos dos use cases já definidos na especificação.
