@@ -1,4 +1,4 @@
-# Plataforma de Trading
+# Plataforma de Trading 📈
 
 O objetivo deste projeto é desenvolver uma plataforma de trading voltada para a compra e venda de ativos digitais, utilizando criptomoedas como exemplo.
 
@@ -45,6 +45,8 @@ A plataforma também deverá fornecer informações como a profundidade do merca
 
 ### Use Cases
 
+***
+
 #### Signup (Criar Conta)
 
 <p>Criar uma conta para o usuário realizar negociações na plataforma.</p>
@@ -59,6 +61,8 @@ Regras:
 * O documento deve seguir as regras de validação do CPF
 * A senha deve ter no mínimo 8 caracteres com letras minúsculas, maiúsculas e números
 
+***
+
 #### Deposit (Depósito)
 
 <p>Adicionar fundos em uma conta.</p>
@@ -71,6 +75,8 @@ Regras:
 * A conta deve existir
 * O assetId permitido é BTC ou USD
 * A quantidade deve ser maior que zero
+
+***
 
 #### Withdraw (Saque)
 
@@ -85,6 +91,8 @@ Regras:
 * O assetId permitido é BTC ou USD
 * A quantidade deve ser maior ou igual ao saldo
 
+***
+
 #### GetAccount (Obter Conta)
 
 <p>Retornar informações de uma conta.</p>
@@ -92,9 +100,14 @@ Regras:
 **Input**: accountId<br/>
 **Output**: accountId, name, email, document, assets[] (assetId, quantity)
 
+Regras:
+* A conta deve existir
+
+***
+
 #### PlaceOrder (Criar Ordem)
 
-<p>Criar uma ordem de compra ou venda limitada em um preço específico.</p>
+<p>Criar uma ordem de compra ou venda. Neste projeto vamos utilizar o conceito de ordem limitada, ou seja, que só é executada se a quantidade e o preço forem atingidos.</p>
 
 **Input**: marketId, accountId, side, quantity, price<br/>
 **Output**: orderId
@@ -103,10 +116,16 @@ Regras:
 
 * Verificar se a conta existe
 * Verificar se a conta tem saldo suficiente para comprar ou vender a quantidade de ativo da ordem
-* Bloquear a quantidade do ativo na conta até que a ordem seja executada ou cancelada
 * Salvar a ordem no mecanismo de persistência
 
+Observações:
+* O marketId é composto de um par de ativos (exemplo: BTC/USD). O lado esquerdo é o ativo que está sendo comprado ou vendido e o lado direito é como ele está sendo pago. Ou seja, se a ordem for de venda, a conta deve ter saldo no ativo que está sendo negociado, nesse caso BTC. Se a ordem for de compra, a conta deve ter saldo no ativo que está sendo utilizado para o pagamento, nesse caso USD
+* A verificação do saldo deve levar em consideração as ordens em aberto, ou seja, se uma conta tem 10 BTC mas ao mesmo tempo tem 5 ordens em aberto, cada uma vendendo 1 BTC, o saldo disponível é de apenas 5
+* Sempre que uma nova ordem é criada, o sistema deve tentar executá-la imediatamente com ordens existentes no livro
+
 #### ExecuteOrder (Executar Ordem)
+
+<p>Quando uma nova ordem é inserida no livro de ofertas, o mecanismo de matching realiza uma tentativa de execução. Esse processo avalia se a ordem pode ser casada imediatamente com ordens do lado oposto.</p>
 
 Regras:
 
@@ -119,6 +138,8 @@ Regras:
 
 #### GetDepth (Obter Profundidade)
 
+<p>Retorna a profundidade do mercado para um par de ativos (market), representando as ordens de compra e venda abertas, organizadas por faixa de preço. Essa informação é essencial para exibir o livro de ofertas agregado (depth chart) e analisar a liquidez disponível em cada lado.</p>
+
 **Input**: marketId, precision<br/>
 **Output**: buys, sells
 
@@ -129,15 +150,21 @@ Regras:
 
 #### GetOrders (Obter Ordens)
 
+<p>Retorna as ordens de uma conta específica, podendo ter um filtro de status.</p>
+
 **Input**: accountId, status<br/>
 **Output**: orderId, side, quantity, price, fillQuantity, fillPrice, timestamp, status
 
 #### GetTrades (Obter Negociações)
 
+<p>Retorna as negociações.</p>
+
 **Input**: marketId<br/>
 **Output**: tradeId, buyOrderId, sellOrderId, side, quantity, price, timestamp
 
-#### GetMarketInfo (Obter Informações do Mercado)
+#### GetMarketTicket (Obter Informações do Mercado)
+
+<p>Retorna as informações estatísticas do mercado.</p>
 
 **Input**: marketId, startDate, endDate<br/>
 **Output** spread, min, max, volume
@@ -161,7 +188,7 @@ Segue abaixo os endpoints da API:
 * GET /accounts/:accountId
 * GET /accounts/:accountId/orders
 * GET /orders/:orderId
-* GET /markets/:marketId/info
+* GET /markets/:marketId/ticket
 * GET /markets/:marketId/trades
 * GET /markets/:marketId/depth
 
@@ -218,4 +245,4 @@ create table ccca.trade (
 
 ### WebSocket
 
-A plataforma terá um streaming de ordens, negociações e profundidade do mercado conforme novas ordens e negociações acontecem.
+A plataforma terá um streaming de ordens, negociações e profundidade do mercado conforme novas ordens são criadas e executadas. Os retornos devem ser os mesmos dos use cases já definidos na especificação.
