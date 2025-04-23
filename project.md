@@ -270,15 +270,20 @@ A plataforma terá um streaming de ordens, negociações e profundidade do merca
 
 ### Decisões de Arquitetura
 
-***
+#### ADR 001: Armazenar Order Book em Memória
 
-Decisão 1: Manter o order book em memória
+##### Contexto
+A plataforma de trading precisa de baixa latência no matching de ordens, alto throughput, e consistência forte entre ordens e negociações.
 
-Justificativa:
-* Latência: Matching de ordens precisa ser ultra rápido. Acesso a disco ou banco (mesmo com índices bons) é lento comparado a memória.
-* Volume de atualizações: Um order book é constantemente atualizado. Cada nova ordem pode mudar o topo do livro e desencadear múltiplas negociações.
-* Atomicidade no matching: Fazer matching em memória permite garantir atomicidade de forma mais simples e segura, sem depender de transações de banco.
-* Design inspirado nas exchanges reais: Praticamente toda exchange de alta performance usa memória + threads/event loops para manter e casar ordens.
+##### Decisão
+Manteremos o order book em memória na engine de matching, desacoplado da persistência. Ordens e trades serão salvos em banco, mas a estrutura de book será volátil e reconstruída caso necessário por meio dos dados persistidos previamente.
 
-Observação:
-* Caso o processo seja reiniciado, é possível recuperar o estado do order book a partir do banco de dados
+##### Alternativas Consideradas
+- **Usar banco de dados para o livro de ordens**: descartado por latência alta.
+- **Manter em Redis**: possível, mas sem vantagens claras frente à memória local e adiciona complexidade de consistência.
+
+##### Consequências
+- Engine de matching não será stateless.
+- Afeta a escalabilidade horizontal.
+- Precisamos de um mecanismo de recuperação caso a aplicação seja reiniciada.
+- Ganho significativo de performance e simplicidade no matching.
