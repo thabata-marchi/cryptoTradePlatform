@@ -270,7 +270,9 @@ A plataforma terá um streaming de ordens, negociações e profundidade do merca
 
 ***
 
-### Decisões de Arquitetura
+### Architecture Decision Record
+
+***
 
 #### ADR 001: Armazenar Order Book em Memória
 
