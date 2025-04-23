@@ -38,7 +38,6 @@ A plataforma também deverá fornecer informações como a profundidade do merca
 | Preço Mínimo (Min Price)       | O menor preço registrado em um determinado período. |
 | Side                           | Direção da ordem: buy (compra) ou sell (venda). Define se o usuário quer adquirir ou se desfazer de um ativo. |
 | Spread                         | Diferença entre o preço de venda e o preço de compra existentes no livro de ofertas. Reflete a liquidez do mercado. |
-| Ticker                         | É um snapshot estatístico do Market (último preço, open, close, min, max, volume, spread). |
 | Último Preço (Last Price)      | Preço da negociação mais recente. |
 | Venda (Sell ou Ask)            | Intenção de vender um ativo a um determinado preço. |
 | Volume                         | Quantidade de ativo negociado em um determinado período ou em uma ordem específica. |
@@ -172,7 +171,7 @@ Regras:
 
 ***
 
-#### GetMarketTicket (Obter Informações do Mercado)
+#### GetMarketInfo (Obter Informações do Mercado)
 
 <p>Retorna as informações estatísticas do mercado.</p>
 
@@ -202,7 +201,7 @@ Segue abaixo os endpoints da API:
 * GET /accounts/:accountId
 * GET /accounts/:accountId/orders
 * GET /orders/:orderId
-* GET /markets/:marketId/ticket
+* GET /markets/:marketId/info
 * GET /markets/:marketId/trades
 * GET /markets/:marketId/depth
 
