@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon --watch src --exec ts-node src/main.ts",
     "coverage": "npx nyc --reporter=lcov --reporter=text ts-node src/signup.ts"
   },
   "dependencies": {
